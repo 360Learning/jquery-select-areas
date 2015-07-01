@@ -15,6 +15,7 @@
 					minSize: [10, 10],
 					onChanged : debugQtyAreas,
 					maxAreas: 3,
+					width: 400,
 					areas: [
 						{
 							x: 10,
@@ -26,6 +27,10 @@
 				});
 				$('#btnView').click(function () {
 					var areas = $('img#example').selectAreas('areas');
+					displayAreas(areas);
+				});
+				$('#btnViewRel').click(function () {
+					var areas = $('img#example').selectAreas('relativeAreas');
 					displayAreas(areas);
 				});
 				$('#btnReset').click(function () {
@@ -95,12 +100,13 @@
 			<h1>Demo Select Areas</h1>
 
 			<div class="image-decorator">
-				<img alt="Image principale" id="example" src="example.jpg" />
+				<img alt="Image principale" id="example" src="example.jpg"/>
 			</div>
 			<table>
 				<tr>
 					<td class="actions">
 						<input type="button" id="btnView" value="Display areas" class="actionOn" />
+						<input type="button" id="btnViewRel" value="Display relative" class="actionOn" />
 						<input type="button" id="btnNew" value="Add New" class="actionOn" />
 						<input type="button" id="btnReset" value="Reset" class="actionOn" />
 						<input type="button" id="btnDestroy" value="Destroy" class="actionOn" />

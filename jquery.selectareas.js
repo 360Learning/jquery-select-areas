@@ -463,6 +463,7 @@
         $selection = $("<div />")
             .css({
                 background : "url(" + $image.attr("src") + ") no-repeat",
+                backgroundSize : $image.width() + "px",
                 position : "absolute"
             })
             .insertAfter($outline);
@@ -531,6 +532,7 @@
                 aspectRatio: 0,
                 minSize: [0, 0],
                 maxSize: [0, 0],
+                width: 0,
                 maxAreas: 0,
                 outlineOpacity: 0.5,
                 overlayOpacity: 0.5,
@@ -549,6 +551,12 @@
 
         // Initialize the image layer
         this.$image = $(object);
+
+        this.ratio = 1;
+        if (this.options.width && this.$image.width() && this.options.width !== this.$image.width()) {
+            this.ratio = this.options.width / this.$image.width();
+            this.$image.width(this.options.width);
+        }
 
         if (this.options.onChanging) {
             this.$image.on("changing", this.options.onChanging);
@@ -695,6 +703,24 @@
         this._eachArea(function (area) {
             ret.push(area.getData());
         });
+        return ret;
+    };
+
+    $.imageSelectAreas.prototype.relativeAreas = function () {
+        var areas = this.areas(),
+            ret = [],
+            ratio = this.ratio,
+            scale = function (val) {
+                return Math.floor(val / ratio);
+            };
+
+        for (var i = 0; i < areas.length; i++) {
+            ret[i] = $.extend({}, areas[i]);
+            ret[i].x = scale(ret[i].x);
+            ret[i].y = scale(ret[i].y);
+            ret[i].w = scale(ret[i].w);
+            ret[i].h = scale(ret[i].h);
+        }
         return ret;
     };
 
