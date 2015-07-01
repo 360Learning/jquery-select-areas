@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<title>Demo Select Areas</title>
+		<link href="example.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="../resources/jquery.selectareas.css" media="screen" rel="stylesheet" type="text/css" />
+		<script src="jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="../jquery.selectareas.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$('img#example').selectAreas({
+					overlayOpacity : 0.45,
+					outlineOpacity: 1,
+					minSize: [10, 10],
+					onChanged : debugQtyAreas,
+					maxAreas: 3,
+					areas: [
+						{
+							x: 10,
+							y: 20,
+							w: 60,
+							h: 100,
+						}
+					]
+				});
+				$('#btnView').click(function () {
+					var areas = $('img#example').selectAreas('areas');
+					displayAreas(areas);
+				});
+				$('#btnReset').click(function () {
+					output("reset")
+					$('img#example').selectAreas('reset');
+				});
+				$('#btnDestroy').click(function () {
+					$('img#example').selectAreas('destroy');
+
+					output("destroyed")
+					$('.actionOn').attr("disabled", "disabled");
+					$('.actionOff').removeAttr("disabled")
+				});
+				$('#btnCreate').attr("disabled", "disabled").click(function () {
+					$('img#example').selectAreas({
+						overlayOpacity : 0.45,
+						minSize: [30, 30],
+						maxSize: [400, 300],
+						onChange : debugQtyAreas
+					});
+
+					output("created")
+					$('.actionOff').attr("disabled", "disabled");
+					$('.actionOn').removeAttr("disabled")
+				});
+				$('#btnNew').click(function () {
+					var areaOptions = {
+						x: Math.floor((Math.random() * 200)),
+						y: Math.floor((Math.random() * 200)),
+						w: Math.floor((Math.random() * 100)) + 50,
+						h: Math.floor((Math.random() * 100)) + 20,
+					};
+					output("Add a new area: " + areaToString(areaOptions))
+					$('img#example').selectAreas('add', areaOptions);
+				});
+			});
+
+			var selectionExists;
+
+			function areaToString(area) {
+				return (typeof area.id === "undefined" ? "" : (area.id + ": ")) + area.x + ':' + area.y  + ' ' + area.w + 'x' + area.h + '<br />'
+			}
+
+			function output (text) {
+				$('#output').html(text);
+			}
+
+			// Log the quantity of selections
+			function debugQtyAreas(event, id, areas) {
+				console.log(areas.length + " areas", arguments);
+			};
+
+			// Display areas coordinates in a div
+			function displayAreas(areas) {
+				var text = "";
+				$.each(areas, function (id, area) {
+					text += areaToString(area);
+				});
+				output(text);
+			};
+
+		</script>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<h1>Demo Select Areas</h1>
+
+			<div class="image-decorator">
+				<img alt="Image principale" id="example" src="example.jpg" />
+			</div>
+			<table>
+				<tr>
+					<td class="actions">
+						<input type="button" id="btnView" value="Display areas" class="actionOn" />
+						<input type="button" id="btnNew" value="Add New" class="actionOn" />
+						<input type="button" id="btnReset" value="Reset" class="actionOn" />
+						<input type="button" id="btnDestroy" value="Destroy" class="actionOn" />
+						<input type="button" id="btnCreate" value="Create" class="actionOff" />
+					</td>
+					<td>
+						<div id="output" class='output'> </div>
+					</td>
+				</tr>
+			</table>
+
+		</div>
+	</body>
+</html>
