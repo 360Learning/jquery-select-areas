@@ -4,11 +4,11 @@
 	position: absolute;
 }
 .blurred {
-  filter: url("/filters.svg#blur3px");
-  -webkit-filter: blur(3px);
-  -moz-filter: blur(3px);
-  -o-filter: blur(3px);
-  filter: blur(3px);
+	filter: url("/filters.svg#blur3px");
+	-webkit-filter: blur(3px);
+	-moz-filter: blur(3px);
+	-o-filter: blur(3px);
+	filter: blur(3px);
 }
 
 .select-areas-outline {

@@ -14,8 +14,8 @@
 	border: 2px solid green;
 }
 .blurred {
-  filter: none;
-  -webkit-filter: none;
-  -moz-filter: none;
-  -o-filter: none;
+	filter: none;
+	-webkit-filter: none;
+	-moz-filter: none;
+	-o-filter: none;
 }

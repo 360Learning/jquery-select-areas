@@ -511,6 +511,7 @@
             focus: focus,
             set: function (dimensions) {
                 area = $.extend(area, dimensions);
+                fireEvent("changed");
             },
             contains: function (point) {
                 return (point.x >= area.x) && (point.x <= area.x + area.w) &&
@@ -676,10 +677,21 @@
         }
     };
 
-    $.imageSelectAreas.prototype.add = function (options) {
+    $.imageSelectAreas.prototype._add = function (options) {
         var id = this.newArea();
-        this.blurAll();
         this.set(id, options);
+    };
+
+    $.imageSelectAreas.prototype.add = function (options) {
+        var that = this;
+        this.blurAll();
+        if ($.isArray(options)) {
+            $.each(options, function (key, val) {
+                that._add(val);
+            });
+        } else {
+            this._add(options);
+        }
         this._refresh();
     };
 

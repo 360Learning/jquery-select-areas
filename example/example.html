@@ -63,6 +63,21 @@
 					output("Add a new area: " + areaToString(areaOptions))
 					$('img#example').selectAreas('add', areaOptions);
 				});
+				$('#btnNews').click(function () {
+					var areaOption1 = {
+						x: Math.floor((Math.random() * 200)),
+						y: Math.floor((Math.random() * 200)),
+						w: Math.floor((Math.random() * 100)) + 50,
+						h: Math.floor((Math.random() * 100)) + 20,
+					}, areaOption2 = {
+						x: areaOption1.x + areaOption1.w + 10,
+						y: areaOption1.y + areaOption1.h - 20,
+						w: 50,
+						h: 20,
+					};
+					output("Add a new area: " + areaToString(areaOption1) + " and " + areaToString(areaOption2))
+					$('img#example').selectAreas('add', [areaOption1, areaOption2]);
+				});
 			});
 
 			var selectionExists;
@@ -105,6 +120,7 @@
 						<input type="button" id="btnView" value="Display areas" class="actionOn" />
 						<input type="button" id="btnViewRel" value="Display relative" class="actionOn" />
 						<input type="button" id="btnNew" value="Add New" class="actionOn" />
+						<input type="button" id="btnNews" value="Add 2 New" class="actionOn" />
 						<input type="button" id="btnReset" value="Reset" class="actionOn" />
 						<input type="button" id="btnDestroy" value="Destroy" class="actionOn" />
 						<input type="button" id="btnCreate" value="Create" class="actionOff" />
