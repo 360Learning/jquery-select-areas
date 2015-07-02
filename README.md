@@ -20,7 +20,14 @@ It is used by :
 
 
 ## Want an example to learn from?
-Check out example/example.html
+Check out [example/example.html](https://rawgit.com/360Learning/jquery-select-areas/master/example/example.html)
+
+## Browser Compatibiilty:
+This plugin is fully compatible with every modern browser and IE >= 9.
+
+One of the features : scaling image, in order to display it smaller or bigger than it actually is, is not compatible with IE8.
+If you need to use this feature and to maintain a compatibility with IE8, you can add the alternate stylesheet *resources/jquery.selectareas.ie8.css*.
+This will make it work but uglify the whole plugin. This stylesheet can be added for IE8 only with conditional comments (see *example/example.html*).
 
 # API Doc
 
@@ -44,13 +51,15 @@ Here is a list of available options for selectAreas, with their default value:
  - allowSelect (true) : When set to false, Areas can not be created.
  - allowDelete (true) : When set to false, Areas can not be deleted.
  - aspectRatio (0) : When not 0, force a ratio between height and width for the selections.
- - minSize ([0, 0]) : When not 0, set minimum size for a selection [width, height]
- - maxSize ([0, 0]) : When not 0, set maximum size for a selection [width, height]
+ - minSize ([0, 0]) : When not 0, set the minimum size for a selection [width, height]
+ - maxSize ([0, 0]) : When not 0, set the maximum size for a selection [width, height]
+ - maxAreas (0) : When not 0, set the maximum number of area that can be drawn.
  - outlineOpacity (0.5) : opacity of the moving dotted outline around a selection.
  - overlayOpacity (0.5) : opacity of the overlay layer over the image
  - areas ([]) : list of areas to add to the image from the beginning  (id will be ignored)
  - onChanging (null) : triggered when the event "changing" is fired
  - onChanged (null) : triggered when the event "changed" is fired
+ - width (0) : When not 0, scale the image to this width (px). The coordinates of the areas on the full image can be retreived with method relativeAreas()
 
 ## Events:
 Two events are fired by the plugin :
@@ -61,6 +70,7 @@ Two events are fired by the plugin :
 Once you added a *selectAreas* plugin on an image, Several method are exposed to help you
 manipulate and retrieve these areas.
  - areas () : returns an array of areas
+ - relativeAreas () : returns an array of areas, with their size and coordinates on the original image (see option width). Equal to areas() when the image is displayed in full size.
  - add (options) : add an area
  - remove (id) : remove an area with its id
  - reset () : remove all areas

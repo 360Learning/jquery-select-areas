@@ -1,8 +1,8 @@
 /* global window, Image, jQuery */
 /**
- * Forked from: Catalin Dogaru - http://code.tutsplus.com/tutorials/how-to-create-a-jquery-image-cropping-plugin-from-scratch-part-i--net-20994
  * @author 360Learning
- * @author Adrien David-Sivelle (Refactoring, Multiselections & Mobile compatibility)
+ * @author Catalin Dogaru (https://github.com/cdog - http://code.tutsplus.com/tutorials/how-to-create-a-jquery-image-cropping-plugin-from-scratch-part-i--net-20994)
+ * @author Adrien David-Sivelle (https://github.com/AdrienDS - Refactoring, Multiselections & Mobile compatibility)
  */
 (function($) {
     $.imageArea = function(parent, id) {
@@ -461,6 +461,7 @@
 
         // Initialize a selection layer and place it above the outline layer
         $selection = $("<div />")
+            .addClass("select-areas-background-area")
             .css({
                 background : "url(" + $image.attr("src") + ") no-repeat",
                 backgroundSize : $image.width() + "px",
@@ -695,6 +696,7 @@
         this.$holder.remove();
         this.$overlay.remove();
         this.$trigger.remove();
+        this.$image.css("width", "").css("position", "").unwrap();
         this.$image.removeData("mainImageSelectAreas");
     };
 
