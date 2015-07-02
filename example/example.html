@@ -12,7 +12,7 @@
 			$(document).ready(function () {
 				$('img#example').selectAreas({
 					minSize: [10, 10],
-					onChanged : debugQtyAreas,
+					onChanged: debugQtyAreas,
 					width: 500,
 					areas: [
 						{
@@ -82,7 +82,7 @@
 
 			var selectionExists;
 
-			function areaToString(area) {
+			function areaToString (area) {
 				return (typeof area.id === "undefined" ? "" : (area.id + ": ")) + area.x + ':' + area.y  + ' ' + area.width + 'x' + area.height + '<br />'
 			}
 
@@ -91,12 +91,12 @@
 			}
 
 			// Log the quantity of selections
-			function debugQtyAreas(event, id, areas) {
+			function debugQtyAreas (event, id, areas) {
 				console.log(areas.length + " areas", arguments);
 			};
 
 			// Display areas coordinates in a div
-			function displayAreas(areas) {
+			function displayAreas (areas) {
 				var text = "";
 				$.each(areas, function (id, area) {
 					text += areaToString(area);

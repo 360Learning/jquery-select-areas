@@ -363,15 +363,25 @@
             },
             moveSelection = function (event) {
                 cancelEvent(event);
+                if (! options.allowMove) {
+                    return;
+                }
                 focus();
 
                 var mousePosition = getMousePosition(event);
+                moveTo({
+                    x: mousePosition[0] - selectionOffset[0],
+                    y: mousePosition[1] - selectionOffset[1]
+                });
 
+                fireEvent("changing");
+            },
+            moveTo = function (point) {
                 // Set the selection position on the x-axis relative to the bounds
                 // of the image
-                if (mousePosition[0] - selectionOffset[0] > 0) {
-                    if (mousePosition[0] - selectionOffset[0] + area.width < $image.width()) {
-                        area.x = mousePosition[0] - selectionOffset[0];
+                if (point.x > 0) {
+                    if (point.x + area.width < $image.width()) {
+                        area.x = point.x;
                     } else {
                         area.x = $image.width() - area.width;
                     }
@@ -380,17 +390,15 @@
                 }
                 // Set the selection position on the y-axis relative to the bounds
                 // of the image
-                if (mousePosition[1] - selectionOffset[1] > 0) {
-                    if (mousePosition[1] - selectionOffset[1] + area.height < $image.height()) {
-                        area.y = mousePosition[1] - selectionOffset[1];
+                if (point.y > 0) {
+                    if (point.y + area.height < $image.height()) {
+                        area.y = point.y;
                     } else {
                         area.y = $image.height() - area.height;
                     }
                 } else {
                     area.y = 0;
                 }
-
-                fireEvent("changing");
                 refresh("moveSelection");
             },
             releaseSelection = function (event) {
@@ -463,7 +471,7 @@
         $selection = $("<div />")
             .addClass("select-areas-background-area")
             .css({
-                background : "url(" + $image.attr("src") + ") no-repeat",
+                background : "#fff url(" + $image.attr("src") + ") no-repeat",
                 backgroundSize : $image.width() + "px",
                 position : "absolute"
             })
@@ -509,6 +517,24 @@
             options: options,
             blur: blur,
             focus: focus,
+            nudge: function (point) {
+                point.x = area.x;
+                point.y = area.y;
+                if (point.d) {
+                    point.y = area.y + point.d;
+                }
+                if (point.u) {
+                    point.y = area.y - point.u;
+                }
+                if (point.l) {
+                    point.x = area.x - point.l;
+                }
+                if (point.r) {
+                    point.x = area.x + point.r;
+                }
+                moveTo(point);
+                fireEvent("changed");
+            },
             set: function (dimensions) {
                 area = $.extend(area, dimensions);
                 fireEvent("changed");
@@ -531,6 +557,7 @@
                 allowResize: true,
                 allowSelect: true,
                 allowDelete: true,
+                allowNudge: true,
                 aspectRatio: 0,
                 minSize: [0, 0],
                 maxSize: [0, 0],
@@ -565,6 +592,9 @@
         }
         if (this.options.onChanged) {
             this.$image.on("changed", this.options.onChanged);
+        }
+        if (this.options.onLoaded) {
+            this.$image.on("loaded", this.options.onLoaded);
         }
 
         // Initialize an image holder
@@ -614,7 +644,32 @@
             // Bind an event handler to the "mousedown" event of the trigger layer
             this.$trigger.mousedown($.proxy(this.newArea, this)).on("touchstart", $.proxy(this.newArea, this));
         }
+        if (this.options.allowNudge) {
+            $('html').keydown(function (e) { // move selection with arrow keys
+                var codes = {
+                        37: "l",
+                        38: "u",
+                        39: "r",
+                        40: "d"
+                    },
+                    direction = codes[e.which],
+                    selectedArea;
 
+                if (direction) {
+                    that._eachArea(function (area) {
+                        if (area.getData().z === 100) {
+                            selectedArea = area;
+                            return false;
+                        }
+                    });
+                    if (selectedArea) {
+                        var move = {};
+                        move[direction] = 1;
+                        selectedArea.nudge(move);
+                    }
+                }
+            });
+        }
     };
 
     $.imageSelectAreas.prototype._refresh = function () {
@@ -755,12 +810,13 @@
         return res;
     };
 
-    $.selectAreas = function(object, customOptions) {
+    $.selectAreas = function(object, options) {
         var $object = $(object);
         if (! $object.data("mainImageSelectAreas")) {
             var mainImageSelectAreas = new $.imageSelectAreas();
-            mainImageSelectAreas.init(object, customOptions);
+            mainImageSelectAreas.init(object, options);
             $object.data("mainImageSelectAreas", mainImageSelectAreas);
+            $object.trigger("loaded");
         }
         return $object.data("mainImageSelectAreas");
     };

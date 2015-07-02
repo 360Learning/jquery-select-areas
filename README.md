@@ -50,6 +50,7 @@ Here is a list of available options for selectAreas, with their default value:
  - allowResize (true) : When set to false, Areas can not be resized.
  - allowSelect (true) : When set to false, Areas can not be created.
  - allowDelete (true) : When set to false, Areas can not be deleted.
+ - allowNudge (true) : When set to false, Areas can not be moved with arrow keys.
  - aspectRatio (0) : When not 0, force a ratio between height and width for the selections.
  - minSize ([0, 0]) : When not 0, set the minimum size for a selection [width, height]
  - maxSize ([0, 0]) : When not 0, set the maximum size for a selection [width, height]
@@ -59,10 +60,12 @@ Here is a list of available options for selectAreas, with their default value:
  - areas ([]) : list of areas to add to the image from the beginning  (id will be ignored)
  - onChanging (null) : triggered when the event "changing" is fired
  - onChanged (null) : triggered when the event "changed" is fired
+ - onLoaded (null) : triggered when the event "loaded" is fired
  - width (0) : When not 0, scale the image to this width (px). The coordinates of the areas on the full image can be retreived with method relativeAreas()
 
 ## Events:
 Two events are fired by the plugin :
+ - loaded : fired when plugin is loaded
  - changing : fired during the modification of a selection. arguments : (event, id, areas)
  - changed  : fired when a selection is released. arguments : (event, id, areas)
 
