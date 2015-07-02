@@ -22,8 +22,8 @@
                 x: 0,
                 y: 0,
                 z: 0,
-                h: 0,
-                w: 0
+                height: 0,
+                width: 0
             },
             blur = function () {
                 area.z = 0;
@@ -80,8 +80,8 @@
                 // Update the outline layer
                 $outline.css({
                     cursor: "default",
-                    width: area.w,
-                    height: area.h,
+                    width: area.width,
+                    height: area.height,
                     left: area.x,
                     top: area.y,
                     "z-index": area.z
@@ -91,8 +91,8 @@
                 $selection.css({
                     backgroundPosition : ( - area.x - 1) + "px " + ( - area.y - 1) + "px",
                     cursor : options.allowMove ? "move" : "default",
-                    width: (area.w - 2 > 0) ? (area.w - 2) : 0,
-                    height: (area.h - 2 > 0) ? (area.h - 2) : 0,
+                    width: (area.width - 2 > 0) ? (area.width - 2) : 0,
+                    height: (area.height - 2 > 0) ? (area.height - 2) : 0,
                     left : area.x + 1,
                     top : area.y + 1,
                     "z-index": area.z + 2
@@ -115,20 +115,20 @@
                             top = - semiheight;
 
                         } else if (vertical === "s") {      // ====== South* ======
-                            top = area.h - semiheight - 1;
+                            top = area.height - semiheight - 1;
 
                         } else {                            // === East & West ===
-                            top = Math.round(area.h / 2) - semiheight - 1;
+                            top = Math.round(area.height / 2) - semiheight - 1;
                         }
 
                         if (horizontal === "e") {           // ====== *East ======
-                            left = area.w - semiwidth - 1;
+                            left = area.width - semiwidth - 1;
 
                         } else if (horizontal === "w") {    // ====== *West ======
                             left = - semiwidth;
 
                         } else {                            // == North & South ==
-                            left = Math.round(area.w / 2) - semiwidth - 1;
+                            left = Math.round(area.width / 2) - semiwidth - 1;
                         }
 
                         $handler.css({
@@ -148,7 +148,7 @@
                 if ($btDelete) {
                     $btDelete.css({
                         display: visible ? "block" : "none",
-                        left: area.x + area.w + 1,
+                        left: area.x + area.width + 1,
                         top: area.y - $btDelete.outerHeight() - 1,
                         "z-index": area.z + 1
                     });
@@ -208,19 +208,19 @@
                 cancelEvent(event);
 
                 // Reset the selection size
-                area.w = options.minSize[0];
-                area.h = options.minSize[1];
+                area.width = options.minSize[0];
+                area.height = options.minSize[1];
                 focus();
                 on("move", resizeSelection);
                 on("stop", releaseSelection);
 
                 // Get the selection origin
                 selectionOrigin = getMousePosition(event);
-                if (selectionOrigin[0] + area.w > $image.width()) {
-                    selectionOrigin[0] = $image.width() - area.w;
+                if (selectionOrigin[0] + area.width > $image.width()) {
+                    selectionOrigin[0] = $image.width() - area.width;
                 }
-                if (selectionOrigin[1] + area.h > $image.height()) {
-                    selectionOrigin[1] = $image.height() - area.h;
+                if (selectionOrigin[1] + area.height > $image.height()) {
+                    selectionOrigin[1] = $image.height() - area.height;
                 }
                 // And set its position
                 area.x = selectionOrigin[0];
@@ -248,12 +248,12 @@
 
                 var card = event.target.className.split(" ")[1];
                 if (card[card.length - 1] === "w") {
-                    selectionOrigin[0] += area.w;
-                    area.x = selectionOrigin[0] - area.w;
+                    selectionOrigin[0] += area.width;
+                    area.x = selectionOrigin[0] - area.width;
                 }
                 if (card[0] === "n") {
-                    selectionOrigin[1] += area.h;
-                    area.y = selectionOrigin[1] - area.h;
+                    selectionOrigin[1] += area.height;
+                    area.y = selectionOrigin[1] - area.height;
                 }
                 if (card === "n" || card === "s") {
                     resizeHorizontally = false;
@@ -303,10 +303,10 @@
 
                 // Set the selection size
                 if (resizeHorizontally) {
-                    area.w = width;
+                    area.width = width;
                 }
                 if (resizeVertically) {
-                    area.h = height;
+                    area.height = height;
                 }
                 // If any aspect ratio is specified
                 if (options.aspectRatio) {
@@ -341,19 +341,19 @@
                     }
 
                     // Set the selection size
-                    area.w = width;
-                    area.h = height;
+                    area.width = width;
+                    area.height = height;
                 }
 
-                if (area.w < 0) {
-                    area.w = Math.abs(area.w);
-                    area.x = selectionOrigin[0] - area.w;
+                if (area.width < 0) {
+                    area.width = Math.abs(area.width);
+                    area.x = selectionOrigin[0] - area.width;
                 } else {
                     area.x = selectionOrigin[0];
                 }
-                if (area.h < 0) {
-                    area.h = Math.abs(area.h);
-                    area.y = selectionOrigin[1] - area.h;
+                if (area.height < 0) {
+                    area.height = Math.abs(area.height);
+                    area.y = selectionOrigin[1] - area.height;
                 } else {
                     area.y = selectionOrigin[1];
                 }
@@ -370,10 +370,10 @@
                 // Set the selection position on the x-axis relative to the bounds
                 // of the image
                 if (mousePosition[0] - selectionOffset[0] > 0) {
-                    if (mousePosition[0] - selectionOffset[0] + area.w < $image.width()) {
+                    if (mousePosition[0] - selectionOffset[0] + area.width < $image.width()) {
                         area.x = mousePosition[0] - selectionOffset[0];
                     } else {
-                        area.x = $image.width() - area.w;
+                        area.x = $image.width() - area.width;
                     }
                 } else {
                     area.x = 0;
@@ -381,10 +381,10 @@
                 // Set the selection position on the y-axis relative to the bounds
                 // of the image
                 if (mousePosition[1] - selectionOffset[1] > 0) {
-                    if (mousePosition[1] - selectionOffset[1] + area.h < $image.height()) {
+                    if (mousePosition[1] - selectionOffset[1] + area.height < $image.height()) {
                         area.y = mousePosition[1] - selectionOffset[1];
                     } else {
-                        area.y = $image.height() - area.h;
+                        area.y = $image.height() - area.height;
                     }
                 } else {
                     area.y = 0;
@@ -514,8 +514,8 @@
                 fireEvent("changed");
             },
             contains: function (point) {
-                return (point.x >= area.x) && (point.x <= area.x + area.w) &&
-                       (point.y >= area.y) && (point.y <= area.y + area.h);
+                return (point.x >= area.x) && (point.x <= area.x + area.width) &&
+                       (point.y >= area.y) && (point.y <= area.y + area.height);
             }
         };
     };
@@ -732,8 +732,8 @@
             ret[i] = $.extend({}, areas[i]);
             ret[i].x = scale(ret[i].x);
             ret[i].y = scale(ret[i].y);
-            ret[i].w = scale(ret[i].w);
-            ret[i].h = scale(ret[i].h);
+            ret[i].width = scale(ret[i].width);
+            ret[i].height = scale(ret[i].height);
         }
         return ret;
     };

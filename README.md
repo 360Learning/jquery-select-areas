@@ -38,8 +38,8 @@ An area is described (when retrieved or set) by a json object :
         x,  // X coordinate (Position)
         y,  // Y coordinate (Position)
         z,  // Z-index (0 when inactive or 100 when focused)
-        w,  // Width of the area
-        h   // Height of the area
+        width,  // Width of the area (Size)
+        height  // Height of the area (Size)
     }
 
 ## Options:

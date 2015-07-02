@@ -18,8 +18,8 @@
 						{
 							x: 10,
 							y: 20,
-							w: 60,
-							h: 100,
+							width: 60,
+							height: 100,
 						}
 					]
 				});
@@ -57,8 +57,8 @@
 					var areaOptions = {
 						x: Math.floor((Math.random() * 200)),
 						y: Math.floor((Math.random() * 200)),
-						w: Math.floor((Math.random() * 100)) + 50,
-						h: Math.floor((Math.random() * 100)) + 20,
+						width: Math.floor((Math.random() * 100)) + 50,
+						height: Math.floor((Math.random() * 100)) + 20,
 					};
 					output("Add a new area: " + areaToString(areaOptions))
 					$('img#example').selectAreas('add', areaOptions);
@@ -67,13 +67,13 @@
 					var areaOption1 = {
 						x: Math.floor((Math.random() * 200)),
 						y: Math.floor((Math.random() * 200)),
-						w: Math.floor((Math.random() * 100)) + 50,
-						h: Math.floor((Math.random() * 100)) + 20,
+						width: Math.floor((Math.random() * 100)) + 50,
+						height: Math.floor((Math.random() * 100)) + 20,
 					}, areaOption2 = {
-						x: areaOption1.x + areaOption1.w + 10,
-						y: areaOption1.y + areaOption1.h - 20,
-						w: 50,
-						h: 20,
+						x: areaOption1.x + areaOption1.width + 10,
+						y: areaOption1.y + areaOption1.height - 20,
+						width: 50,
+						height: 20,
 					};
 					output("Add a new area: " + areaToString(areaOption1) + " and " + areaToString(areaOption2))
 					$('img#example').selectAreas('add', [areaOption1, areaOption2]);
@@ -83,7 +83,7 @@
 			var selectionExists;
 
 			function areaToString(area) {
-				return (typeof area.id === "undefined" ? "" : (area.id + ": ")) + area.x + ':' + area.y  + ' ' + area.w + 'x' + area.h + '<br />'
+				return (typeof area.id === "undefined" ? "" : (area.id + ": ")) + area.x + ':' + area.y  + ' ' + area.width + 'x' + area.height + '<br />'
 			}
 
 			function output (text) {
