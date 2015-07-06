@@ -751,7 +751,6 @@
         }
         this._refresh();
         if (! this.options.allowSelect && ! this.options.allowMove && ! this.options.allowResize && ! this.options.allowDelete) {
-            console.log("bluringAll")
             this.blurAll();
         }
     };
