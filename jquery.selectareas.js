@@ -537,6 +537,8 @@
             },
             set: function (dimensions) {
                 area = $.extend(area, dimensions);
+                selectionOrigin[0] = area.x;
+                selectionOrigin[1] = area.y;
                 fireEvent("changed");
             },
             contains: function (point) {
@@ -748,6 +750,10 @@
             this._add(options);
         }
         this._refresh();
+        if (! this.options.allowSelect && ! this.options.allowMove && ! this.options.allowResize && ! this.options.allowDelete) {
+            console.log("bluringAll")
+            this.blurAll();
+        }
     };
 
     $.imageSelectAreas.prototype.reset = function () {
@@ -824,7 +830,8 @@
 
     $.fn.selectAreas = function(customOptions) {
         if ( $.imageSelectAreas.prototype[customOptions] ) { // Method call
-            return $.imageSelectAreas.prototype[ customOptions ].apply( $.selectAreas(this), Array.prototype.slice.call( arguments, 1 ));
+            var ret = $.imageSelectAreas.prototype[ customOptions ].apply( $.selectAreas(this), Array.prototype.slice.call( arguments, 1 ));
+            return typeof ret === "undefined" ? this : ret;
 
         } else if ( typeof customOptions === "object" || ! customOptions ) { // Initialization
             //Iterate over each object
