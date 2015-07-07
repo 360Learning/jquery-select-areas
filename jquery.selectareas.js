@@ -535,11 +535,13 @@
                 moveTo(point);
                 fireEvent("changed");
             },
-            set: function (dimensions) {
+            set: function (dimensions, silent) {
                 area = $.extend(area, dimensions);
                 selectionOrigin[0] = area.x;
                 selectionOrigin[1] = area.y;
-                fireEvent("changed");
+                if (! silent) {
+                    fireEvent("changed");
+                }
             },
             contains: function (point) {
                 return (point.x >= area.x) && (point.x <= area.x + area.width) &&
@@ -635,7 +637,7 @@
             .insertAfter(this.$overlay);
 
         $.each(this.options.areas, function (key, area) {
-            that.add(area);
+            that._add(area, true);
         });
 
 
@@ -726,17 +728,17 @@
         return id;
     };
 
-    $.imageSelectAreas.prototype.set = function (id, options) {
+    $.imageSelectAreas.prototype.set = function (id, options, silent) {
         if (this._areas[id]) {
             options.id = id;
-            this._areas[id].set(options);
+            this._areas[id].set(options, silent);
             this._areas[id].focus();
         }
     };
 
-    $.imageSelectAreas.prototype._add = function (options) {
+    $.imageSelectAreas.prototype._add = function (options, silent) {
         var id = this.newArea();
-        this.set(id, options);
+        this.set(id, options, silent);
     };
 
     $.imageSelectAreas.prototype.add = function (options) {
