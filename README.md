@@ -1,10 +1,10 @@
 jQuery-select-areas
 ===================
 
-select-areas is a jQuery plugin that let you select multiple areas of an image,
+jQuery-select-areas is a jQuery plugin that let you select multiple areas of an image,
 move them and resize them.
 
-It is used by :
+It is used by:
  - [360learning](https://360learning.com)
 
 ![jQuery-select-areas Preview](https://rawgit.com/360Learning/jquery-select-areas/master/jQuerySelectAreas-Preview.png)
@@ -33,8 +33,9 @@ This will make it work but uglify the whole plugin. This stylesheet can be added
 
 # API Doc
 
-## Area:
-An area is described (when retrieved or set) by a json object :
+## Area
+An area is described (when retrieved or set) by a json object:
+
     {
         id, // ID identifying the area in the plugin
         x,  // X coordinate (Position)
@@ -44,11 +45,11 @@ An area is described (when retrieved or set) by a json object :
         height  // Height of the area (Size)
     }
 
-## Options:
-Here is a list of available options for selectAreas, with their default value:
+## Options
+Here is a list of available options for selectAreas, with their *default value*:
 
  - **allowEdit** (*true*) : When set to false, unset allowMove, allowResize, allowSelect and allowDelete
- - **allowMove** (*true*) : When set to false, Areas can not be moved.
+ - **allowMove** (*true*) : When set to false, Areas can not be moved with a drag & drop.
  - **allowResize** (*true*) : When set to false, Areas can not be resized.
  - **allowSelect** (*true*) : When set to false, Areas can not be created.
  - **allowDelete** (*true*) : When set to false, Areas can not be deleted.
@@ -65,15 +66,15 @@ Here is a list of available options for selectAreas, with their default value:
  - **onLoaded** (*null*) : triggered when the event "loaded" is fired
  - **width** (*0*) : When not 0, scale the image to this width (px). The coordinates of the areas on the full image can be retrieved with method relativeAreas()
 
-## Events:
-Two events are fired by the plugin :
+## Events
+Three events are fired by the plugin:
  - **loaded** : fired when plugin is loaded
  - **changing** : fired during the modification of a selection. arguments : (event, id, areas)
  - **changed**  : fired when a selection is released. arguments : (event, id, areas)
 
-## Methods:
-Once you added a *selectAreas* plugin on an image, Several method are exposed to help you
-manipulate and retrieve these areas.
+## Methods
+Once you added a *selectAreas* plugin on an image, several method are exposed to help you
+manipulate and retrieve these areas:
  - **areas ()** : returns an array of areas
  - **relativeAreas ()** : returns an array of areas, with their size and coordinates on the original image (see option width). Equal to areas() when the image is displayed in full size.
  - **add (options)** : add an area
