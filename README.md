@@ -9,6 +9,11 @@ It is used by:
 
 ![jQuery-select-areas Preview](https://rawgit.com/360Learning/jquery-select-areas/master/jQuerySelectAreas-Preview.png)
 
+# Project continuation
+
+We (360Learning) no longer have the time to maintain this project, so the issue tracker has been closed. If someone wants to get admin access to this repository to fix the few bugs that are reported, we would gladly agree. Else, there already are some forks of this project, so don't hesitate to use them if they have fixed a bug that is bother you.
+Best regards
+
 # Quick Start
 
 ## Use like so:
