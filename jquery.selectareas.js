@@ -424,7 +424,9 @@
                 $.each($resizeHandlers, function(card, $handler) {
                     $handler.remove();
                 });
-                $btDelete.remove();
+                if($btDelete){
+                    $btDelete.remove();    
+                } 
                 parent._remove(id);
                 fireEvent("changed");
             },
