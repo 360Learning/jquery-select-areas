@@ -474,7 +474,7 @@
             .addClass("select-areas-background-area")
             .css({
                 background : "#fff url(" + $image.attr("src") + ") no-repeat",
-                backgroundSize : $image.width() + "px " + $image.height() + 'px',
+                backgroundSize : $image.width() + "px " + $image.height() + "px",
                 position : "absolute"
             })
             .insertAfter($outline);
