@@ -474,7 +474,7 @@
             .addClass("select-areas-background-area")
             .css({
                 background : "#fff url(" + $image.attr("src") + ") no-repeat",
-                backgroundSize : $image.width() + "px",
+                backgroundSize : $image.width() + "px " + $image.height() + 'px',
                 position : "absolute"
             })
             .insertAfter($outline);
@@ -774,6 +774,7 @@
         this.$trigger.remove();
         this.$image.css("width", "").css("position", "").unwrap();
         this.$image.removeData("mainImageSelectAreas");
+        this.$image.off('changing changed loaded');
     };
 
     $.imageSelectAreas.prototype.areas = function () {
